@@ -25,7 +25,7 @@ thresh= 120
 maxval=255
 
 # 鏡頭
-vid = cv2.VideoCapture('http://192.168.8.106:4747/mjpegfeed') # /video
+vid = cv2.VideoCapture('http://192.168.1.117:4747/mjpegfeed') # /video
 # cv2.namedWindow(cv2.WINDOW_NORMAL)
 while (vid.isOpened()):
 	
@@ -54,18 +54,20 @@ while (vid.isOpened()):
 vid.release()
 cv2.destroyWindow('output')
 img = cv2.imread("mypict.jpg")
-thresh= 120
+thresh= 150
 maxval=255
-window("dst")
-window("image_copy")
+window("white_hair")
+window("white_hair_region")
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
 contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
 image_copy = img.copy()
 cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
-cv2.imshow("dst",dst)
-cv2.imshow("image_copy",image_copy)
+cv2.imshow("white_hair",dst)
+cv2.imshow("white_hair_region",image_copy)
 cv2.waitKey(0)
+cv2.imwrite("white_hair.jpg",dst)
+cv2.imwrite("white_hair_region.jpg",image_copy)
 cv2.destroyAllWindows()
 # cv2.imwrite('dst.jpg',dst)
 # cv2.imwrite('image_copy.jpg',image_copy)
