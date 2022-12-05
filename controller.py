@@ -1,12 +1,10 @@
 import time, sys
 import os
 from PyQt5.uic import loadUi
-from PyQt5 import QtWidgets, QtGui, QtCore, QtMultimediaWidgets, uic
+from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.QtGui import QImage, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog
-from PyQt5.QtMultimedia import (QCameraInfo, QCamera, QCameraImageCapture, QImageEncoderSettings, QMultimedia, QCameraViewfinderSettings, QVideoFrame, QSound)
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 import cv2
 from cv2 import VideoCapture
 from UI import Ui_MainWindow
@@ -19,22 +17,22 @@ from PyQt5.QtWebEngineWidgets import *
 class MainWindow_controller(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow_controller, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        # uic.loadUi('CameraWin.ui', self)
+        # self.ui = Ui_MainWindow()
+        # self.ui.setupUi(self)
+        uic.loadUi('CameraWin.ui', self)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.show_viedo)
-        self.ui.startButton.clicked.connect(self.videoButton) #鏡頭
-        self.ui.pushButton_2.clicked.connect(self.grayhairButton) #白髮分析
-        self.ui.photoButton.clicked.connect(self.photoButton) #拍照
-        self.ui.comboBox.addItems(["長髮整理", "中長髮整理", "短髮整理", "男生髮型整理", "其他"])
-        self.ui.colorButton.clicked.connect(self.colorButton) #調整髮色、唇色
+        self.bStart.clicked.connect(self.showVideo) #鏡頭
+        self.bGrayHair.clicked.connect(self.grayHairAna) #白髮分析
+        self.bPhoto.clicked.connect(self.takePhoto) #拍照
+        self.comboBox.addItems(["長髮整理", "中長髮整理", "短髮整理", "男生髮型整理", "其他"])
+        self.bColor.clicked.connect(self.chooseColor) #調整髮色、唇色
         # self.ui.comboBox.setCurrentIndex.connect(self.selectionchange)
-        self.ui.image.setToolTip('手機鏡頭畫面')
-        self.ui.photo.setToolTip('照片顯示於此')
-        self.ui.photoButton.setToolTip('拍照並儲存照片')
-        self.ui.pushButton_2.setToolTip('分析白頭髮區域')
-        self.ui.colorButton.setToolTip('使用調色盤選擇髮色及唇色')
+        self.image.setToolTip('手機鏡頭畫面')
+        self.photo.setToolTip('照片顯示於此')
+        self.bPhoto.setToolTip('拍照並儲存照片')
+        self.bGrayHair.setToolTip('分析白頭髮區域')
+        self.bColor.setToolTip('使用調色盤選擇髮色及唇色')
         self.cap_video=0
         self.flag = 0
         self.img = []
@@ -43,28 +41,28 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         #self.ui.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) #介面改為黑色
 
     #連接手機相機
-    def videoButton(self):
+    def showVideo(self):
         if (self.flag == 0):
-            # self.ui.startButton.setToolTip('關閉相機')
+            # self.ui.bStart.setToolTip('關閉相機')
             self.cap_video = cv2.VideoCapture('http://192.168.252.2:4747/mjpegfeed')
             self.timer.start(5);
             self.flag+=1
-            self.ui.startButton.setText("Close")
+            self.bStart.setText("Close")
         # elif (self.flag == 1):
         #     ret, frame = self.cap_video.read()
         #     cv2.imwrite('photo.jpg',frame)
         #     #cv2.imshow('photo.jpg', frame)
-        #     self.ui.startButton.setText("Close")
+        #     self.ui.bStart.setText("Close")
         #     self.flag+=1
         else:
             self.timer.stop()
             self.cap_video.release()
-            self.ui.image.clear()
-            self.ui.startButton.setText("Continue")
+            self.image.clear()
+            self.bStart.setText("Continue")
             self.flag=0
-    photo = False #按下拍照時的參考變數，預設 False
+
     #拍照
-    def photoButton(self):
+    def takePhoto(self):
         thresh= 120
         maxval= 255
         #def window (name):
@@ -75,42 +73,40 @@ class MainWindow_controller(QtWidgets.QMainWindow):
             img = cv2.imread("photo.jpg")
             thresh= 120
             maxval=255
-            global photo
-            photo = True #變數設定為 True
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # 改為 RGB
             height, width, channel = frame.shape
             bytesPerline = channel * width
             img = QImage(frame, width, height, bytesPerline, QImage.Format_RGB888)
-            self.ui.photo.setPixmap(QPixmap.fromImage(img))   # 顯示圖片
+            self.photo.setPixmap(QPixmap.fromImage(img))   # 顯示圖片
             #window("photo")
             #cv2.imshow("photo",frame)
             #self.ui.image.setPixmap(QPixmap.fromImage(img))
         # else:
-        #     self.ui.photoButton.setToolTip('拍照')
+        #     self.ui.bPhoto.setToolTip('拍照')
     
     #白頭髮 #合
-    def grayhairButton(self):
+    def grayHairAna(self):
         thresh= 120
         maxval= 255
-        def window (name):
-            cv2.namedWindow(name,cv2.WINDOW_NORMAL)
         if (self.flag == 1):
             #ret, frame = self.cap_video.read()
             #cv2.imshow('output',frame)
             #cv2.imwrite('photo.jpg')
             #cv2.destroyWindow('output')
-            img = cv2.imread("photo.jpg")
-            thresh= 120
-            maxval=255
-            window("gray_hair")
-            window("gray_hair_region")
-            img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
-            contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-            image_copy = img.copy()
-            cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
-            cv2.imshow("gray_hair",dst)
-            cv2.imshow("gray_hair_region",image_copy)
+            sc = self.selectedColor
+            os.system(f'python makeup.py -i photo.jpg --color {sc[2]},{sc[1]},{sc[0]}')
+            # img = cv2.imread("photo.jpg")
+            # thresh= 120
+            # maxval=255
+            # cv2.namedWindow("gray_hair", cv2.WINDOW_NORMAL)
+            # cv2.namedWindow("gray_hair_region", cv2.WINDOW_NORMAL)
+            # img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            # ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+            # contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+            # image_copy = img.copy()
+            # cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+            # cv2.imshow("gray_hair",dst)
+            # cv2.imshow("gray_hair_region",image_copy)
 
     #整理方法建議
     @pyqtSlot()
@@ -122,18 +118,20 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.browser.load(QtCore.QUrl('https://www.youtube.com/results?search_query=%E9%95%B7%E9%AB%AE%E6%95%B4%E7%90%86'))
         self.browser.show()
 
-    def colorButton(self):
+    def chooseColor(self):
         color = QColorDialog.getColor()
         if color.isValid():
             print(color.name())
             print(color.red(), color.green(), color.blue())
-        r, g, b = color.red(), color.green(), color.blue()
-        strRGB = ('{:^3d}, {:^3d}, {:^3d}'.format(r, g, b))
+            r, g, b = color.red(), color.green(), color.blue()
+            self.selectedColor = [r, g, b]
+        # strRGB = ('{:^3d}, {:^3d}, {:^3d}'.format(r, g, b))
 
     def show_viedo(self):
         ret, self.img = self.cap_video.read()
         if ret:
             self.show_cv_img(self.img)
+
     def show_cv_img(self, img):
         shrink = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #將BGR格式轉為RGB格式
         QtImg = QtGui.QImage(shrink.data,
@@ -142,5 +140,5 @@ class MainWindow_controller(QtWidgets.QMainWindow):
                               shrink.shape[1] * 3,
                              QtGui.QImage.Format_RGB888) #The image is stored using a 24-bit RGB format (8-8-8).
         jpg_out = QtGui.QPixmap(QtImg).scaled(
-             self.ui.image.width(), self.ui.image.height())
-        self.ui.image.setPixmap(jpg_out)
+             self.image.width(), self.image.height())
+        self.image.setPixmap(jpg_out)
