@@ -6,13 +6,6 @@ from test import evaluate
 import argparse
 
 
-def parse_args():
-    parse = argparse.ArgumentParser()
-    parse.add_argument('--img-path', default='imgs/10.png')
-    parse.add_argument('color', type=)
-    return parse.parse_args()
-
-
 def sharpen(img):
     img = img * 1.0
     gauss_out = gaussian(img, sigma=5, multichannel=True)
@@ -57,13 +50,19 @@ def hair(image, parsing, part=17, color=[230, 50, 20]):
 
 
 if __name__ == '__main__':
+
+    parse = argparse.ArgumentParser()
+    parse.add_argument('-i', '--imgpath', default='imgs/10.png', help='Input image')
+    parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
+    parse.add_argument('--color', default='red', type=str, help='color to change')
+
+    args = parse.parse_args()
+
     # 1  face
     # 11 teeth
     # 12 upper lip
     # 13 lower lip
     # 17 hair
-
-    args = parse_args()
 
     table = {
         'hair': 17,
@@ -71,13 +70,14 @@ if __name__ == '__main__':
         'lower_lip': 13
     }
 
-    image_path = args.img_path
-    cp = 'cp/79999_iter.pth'
+    image_path = args.imgpath
 
     image = cv2.imread(image_path)
     image = cv2.resize(image,(1024,1024))
     ori = image.copy()
-    parsing = evaluate(image_path, cp)
+    parsing = evaluate(image_path, args.model)
+    print(parsing.shape)
+    quit()
     parsing = cv2.resize(parsing, image.shape[0:2], interpolation=cv2.INTER_NEAREST)
 
     parts = [table['hair'], table['upper_lip'], table['lower_lip']]
@@ -92,18 +92,3 @@ if __name__ == '__main__':
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
