@@ -26,7 +26,9 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.bGrayHair.clicked.connect(self.grayHairAna) #白髮分析
         self.bPhoto.clicked.connect(self.takePhoto) #拍照
         self.comboBox.addItems(["長髮整理", "中長髮整理", "短髮整理", "男生髮型整理", "其他"])
+        self.comboBox.currentIndexChanged.connect(self.selectChanged)
         self.bColor.clicked.connect(self.chooseColor) #調整髮色、唇色
+
         # self.ui.comboBox.setCurrentIndex.connect(self.selectionchange)
         self.image.setToolTip('手機鏡頭畫面')
         self.photo.setToolTip('照片顯示於此')
@@ -39,6 +41,10 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         QToolTip.setFont(QFont('SansSerif', 10))
         #setup style sheet
         #self.ui.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) #介面改為黑色
+
+    def selectChanged(self, index):
+        # sindex = self.comboBox.currentIndex()
+        pass
 
     #連接手機相機
     def showVideo(self):
