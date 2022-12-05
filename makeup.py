@@ -36,9 +36,9 @@ def hair(image, parsing, part=17, color=[230, 50, 20]):
     tar_hsv = cv2.cvtColor(tar_color, cv2.COLOR_BGR2HSV)
 
     if part == 12 or part == 13:
-        image_hsv[:, :, 0:2] = tar_hsv[:, :, 0:2]
+        image_hsv[:, :, :2] = tar_hsv[:, :, :2]
     else:
-        image_hsv[:, :, 0:1] = tar_hsv[:, :, 0:1]
+        image_hsv[:, :, :1] = tar_hsv[:, :, :1]
 
     changed = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2BGR)
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parse = argparse.ArgumentParser()
     parse.add_argument('-i', '--imgpath', default='imgs/10.png', help='Input image')
     parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
-    parse.add_argument('--color', default='red', type=str, help='color to change')
+    parse.add_argument('--color', default='230,50,20', type=str, help='set bgr colors to change')
 
     args = parse.parse_args()
 
@@ -76,19 +76,16 @@ if __name__ == '__main__':
     image = cv2.resize(image,(1024,1024))
     ori = image.copy()
     parsing = evaluate(image_path, args.model)
-    print(parsing.shape)
-    quit()
     parsing = cv2.resize(parsing, image.shape[0:2], interpolation=cv2.INTER_NEAREST)
+    parts = [table['hair']]# , table['upper_lip'], table['lower_lip']]
 
-    parts = [table['hair'], table['upper_lip'], table['lower_lip']]
-
-    colors = [[230, 50, 20], [20, 70, 180], [20, 70, 180]]
+    colors = [args.color.split(',')]#, [20, 70, 180], [20, 70, 180]]
 
     for part, color in zip(parts, colors):
         image = hair(image, parsing, part, color)
 
-    cv2.imshow('image', cv2.resize(ori, (512, 512)))
-    cv2.imshow('color', cv2.resize(image, (512, 512)))
+    cv2.imshow('Original', cv2.resize(ori, (512, 512)))
+    cv2.imshow('Changed', cv2.resize(image, (512, 512)))
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

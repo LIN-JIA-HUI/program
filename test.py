@@ -71,7 +71,6 @@ def evaluate(image_path='./imgs/1124.jpg', cp='cp/79999_iter.pth'):
         img = img.cpu() #cuda()
         out = net(img)[0]
         parsing = out.squeeze(0).cpu().numpy().argmax(0)
-        # print(parsing)
         # print(np.unique(parsing))
 
         # vis_parsing_maps(image, parsing, stride=1, save_im=False, save_path=osp.join(respth, dspth))
