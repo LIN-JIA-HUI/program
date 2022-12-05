@@ -2,7 +2,10 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
-from IPython.display import clear_output
+# from IPython.display import clear_output
+
+def window (name):
+    cv2.namedWindow(name,cv2.WINDOW_NORMAL)
 
 # # 設定輸入的影像路徑，並讀檔
 # # path = "path to the mask in %d.png format"
@@ -39,8 +42,6 @@ from IPython.display import clear_output
 # plt.imshow(image_rgb)
 # plt.show()
 
-
-
 # hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
 # hue,saturation,value = cv2.split(hsv_img)
 # hsv_img=cv2.merge([value,hue,saturation])
@@ -73,11 +74,11 @@ from IPython.display import clear_output
 # 	# Capture the video frame
 # 	# by frame
 # 	ret, frame = vid.read()
-# 	cv2.imshow('output',frame)
+# 	cv2.imshow('mask',frame)
 
 # 	# Display the resulting frame
     
-# 	# cv2.imshow('output', frame)
+# 	# cv2.imshow('mask', frame)
 # 	# gray_frame = cv2.cvtColor(frame,cv2.COLOR_BAYER_BG2BGR)
 # 	# thresh= 52
 # 	# maxval=255
@@ -111,21 +112,163 @@ from IPython.display import clear_output
 # vid.release()
 # cv2.destroyAllWindows()
 
-img = cv2.imread("mypict.jpg")
-thresh= 120
-maxval=255
-# window("ori")
+# #白頭髮標記(侵蝕)
+# img = cv2.imread("16.png")
+# thresh= 110
+# maxval=255
 # window("dst")
 # window("image_copy")
-img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# kernel = np.ones((3,3), np.uint8)
+# erosion = cv2.erode(img, kernel, iterations = 1)
+# img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# image_copy = img.copy()
+# cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+# cv2.imshow("dst",dst)
+# cv2.imshow("image_copy",image_copy)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# img = cv2.imread("16.png")
+# res1 = cv2.add(img,img)
+# res2 = img+img
+# window("res2")
+# window("ori")
+# cv2.imshow("ori",img)
+# cv2.imshow("res2",res2)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# #白頭髮標記
+# img = cv2.imread("mypict.jpg")
+# thresh= 150
+# maxval=255
+# window("dst")
+# window("image_copy")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# image_copy = img.copy()
+# cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+# cv2.imshow("dst",dst)
+# cv2.imshow("image_copy",image_copy)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+## threshold
+# def show_img(img):
+#     plt.style.use('dark_background')
+#     image_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     plt.imshow(image_rgb)
+#     plt.show()
+# def img_processing(img):
+#     # do something here
+
+#     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # 先將圖片轉為灰階
+    
+#     # global thresholding
+#     ret1,th1 = cv2.threshold(img,100,255,cv2.THRESH_BINARY)
+    
+#     # plot all the images and their histograms
+#     images = [img, 0, th1,]
+#     titles = ['Original Gray Image','Global Thresholding',
+
+#             'Histogram',"Histogram"]
+    
+#     plt.figure(figsize=(15,15)) 
+#     for i in range(2):        
+#         plt.subplot(2,2,0*2+i+1)
+#         plt.imshow(images[i*2],'gray')
+#         plt.title(titles[0*2+i]) #, plt.xticks([]), plt.yticks([])
+        
+#         plt.subplot(2,2,1*2+i+1)
+# #         plt.hist(images[i*3].ravel(),256)
+#         plt.hist(images[i*2].ravel(), 256, [0, 300])
+#         plt.title(titles[1*2+i]) #, plt.xticks([]), plt.yticks([])
+        
+#     plt.show()
+# file_name = "7.png"
+# origin_img = cv2.imread(file_name)
+# print("origin picture:")
+# show_img(origin_img)
+# img_processing(origin_img)
+
+# # threshold&降躁(沒什麼變化)
 # thresh= 120
 # maxval=255
-ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
-contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-image_copy = img.copy()
-cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
-cv2.imshow("dst",dst)
+# img = cv2.imread("1.png")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# blur_img = cv2.medianBlur(img_gray,5) 
+# ret,dst=cv2.threshold(blur_img,thresh,maxval,cv2.THRESH_BINARY)
+# dst_mean = cv2.adaptiveThreshold(blur_img,maxval,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,3,5)
+# dst_gauss=cv2.adaptiveThreshold(blur_img,maxval,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,5,-1)
 # cv2.imshow("dst",dst)
-cv2.imshow("image_copy",image_copy)
+# cv2.imshow('adaptiveThreshold',dst_mean)
+# cv2.imshow("ADAPTIVE_THRESH_GAUSSIAN_C",dst_gauss)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# # threshold
+# thresh= 51
+# maxval=255
+# img = cv2.imread("2.png")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("ori",img)
+# cv2.imshow("dst1-51",dst)
+# thresh= 80
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst2-80",dst)
+# thresh= 90
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst3-90",dst)
+# thresh= 100
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst4-100",dst)
+# thresh= 105
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst5-105",dst)
+# thresh= 110
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst6-110",dst)
+# thresh= 120
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst7-120",dst)
+# thresh= 130
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst8-130",dst)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+img=cv2.imread("picture/6.jpg")
+img = cv2.resize(img,(512,512))
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+lower_white=np.array([0, 0, 40])
+upper_white=np.array([180, 18, 230])
+mask = cv2.inRange(hsv, lower_white, upper_white)
+res = cv2.bitwise_and(img, img, mask=mask)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))  # 設定膨脹與侵蝕的參數
+res = cv2.dilate(res, kernel)       # 膨脹影像，消除雜訊
+res = cv2.erode(res, kernel)        # 縮小影像，還原大小
+contours, hierarchy = cv2.findContours(res, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+for contour in contours:
+        area = cv2.contourArea(contour)    # 取得範圍內的面積
+        color = (0,0,255)                  # 設定外框顏色
+        # 如果面積大於 300 再標記，避免標記到背景中太小的東西
+        if(area > 300):
+            for i in range(len(contour)):
+                if i>0 and i<len(contour)-1:
+                    # 從第二個點開始畫線
+                    img = cv2.line(img, (contour[i-1][0][0], contour[i-1][0][1]), (contour[i][0][0], contour[i][0][1]), color, 3)
+                elif i == len(contour)-1:
+                    # 如果是最後一個點，與第一個點連成一線
+                    img = cv2.line(img, (contour[i][0][0], contour[i][0][1]), (contour[0][0][0], contour[0][0][1]), color, 3)
+
+# img = cv2.GaussianBlur(img, (3, 3), 0)
+# kernel = np.ones((3,3), np.uint8)
+# erosion = cv2.erode(img, kernel, iterations = 1)
+
+cv2.imshow('Input', img)
+# cv2.imshow('Result', res)
 cv2.waitKey(0)
-cv2.destroyAllWindows()
