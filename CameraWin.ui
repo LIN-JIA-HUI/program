@@ -28,9 +28,9 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="colorButton">
+      <widget class="QPushButton" name="bColor">
        <property name="text">
-        <string>Color</string>
+        <string>Choose Color</string>
        </property>
       </widget>
      </item>
@@ -48,7 +48,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="photoButton">
+      <widget class="QPushButton" name="bPhoto">
        <property name="text">
         <string>Photo</string>
        </property>
@@ -68,7 +68,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="bGrayHair">
        <property name="text">
         <string>Gray Hair</string>
        </property>
@@ -76,7 +76,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="startButton">
+   <widget class="QPushButton" name="bStart">
     <property name="geometry">
      <rect>
       <x>597</x>
@@ -152,12 +152,47 @@ border-style:outset;
      <x>0</x>
      <y>0</y>
      <width>1532</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Tool">
+    <property name="title">
+     <string>&amp;Tool</string>
+    </property>
+    <addaction name="actionChoose_Color"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Tool"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionChoose_Color">
+   <property name="text">
+    <string>Choose Color...</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionChoose_Color</sender>
+   <signal>triggered()</signal>
+   <receiver>bColor</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>100</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
