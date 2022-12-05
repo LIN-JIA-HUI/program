@@ -53,8 +53,10 @@ if __name__ == '__main__':
 
     parse = argparse.ArgumentParser()
     parse.add_argument('-i', '--imgpath', default='imgs/10.png', help='Input image')
+    parse.add_argument('-o', '--output', default='', help='Output image')
     parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
     parse.add_argument('--color', default='230,50,20', type=str, help='set bgr colors to change')
+    parse.add_argument('--show', default=1, type=int, help='Show picture')
 
     args = parse.parse_args()
 
@@ -84,8 +86,12 @@ if __name__ == '__main__':
     for part, color in zip(parts, colors):
         image = hair(image, parsing, part, color)
 
-    cv2.imshow('Original', cv2.resize(ori, (512, 512)))
-    cv2.imshow('Changed', cv2.resize(image, (512, 512)))
+    if args.show == 1:
+        cv2.imshow('Original', cv2.resize(ori, (512, 512)))
+        cv2.imshow('Changed', cv2.resize(image, (512, 512)))
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    if args.output != '':
+        cv2.imwrite(args.output, image)
