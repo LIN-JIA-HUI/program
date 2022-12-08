@@ -241,34 +241,13 @@ def window (name):
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-img=cv2.imread("picture/6.jpg")
-img = cv2.resize(img,(512,512))
+img=cv2.imread("mypict.jpg")
+# img=cv2.imread("picture/10.png")
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-lower_white=np.array([0, 0, 40])
-upper_white=np.array([180, 18, 230])
-mask = cv2.inRange(hsv, lower_white, upper_white)
+lower_gray=np.array([10, 0, 40])
+upper_gray=np.array([180, 18, 230])
+mask = cv2.inRange(hsv, lower_gray, upper_gray)
 res = cv2.bitwise_and(img, img, mask=mask)
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))  # 設定膨脹與侵蝕的參數
-res = cv2.dilate(res, kernel)       # 膨脹影像，消除雜訊
-res = cv2.erode(res, kernel)        # 縮小影像，還原大小
-contours, hierarchy = cv2.findContours(res, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-for contour in contours:
-        area = cv2.contourArea(contour)    # 取得範圍內的面積
-        color = (0,0,255)                  # 設定外框顏色
-        # 如果面積大於 300 再標記，避免標記到背景中太小的東西
-        if(area > 300):
-            for i in range(len(contour)):
-                if i>0 and i<len(contour)-1:
-                    # 從第二個點開始畫線
-                    img = cv2.line(img, (contour[i-1][0][0], contour[i-1][0][1]), (contour[i][0][0], contour[i][0][1]), color, 3)
-                elif i == len(contour)-1:
-                    # 如果是最後一個點，與第一個點連成一線
-                    img = cv2.line(img, (contour[i][0][0], contour[i][0][1]), (contour[0][0][0], contour[0][0][1]), color, 3)
-
-# img = cv2.GaussianBlur(img, (3, 3), 0)
-# kernel = np.ones((3,3), np.uint8)
-# erosion = cv2.erode(img, kernel, iterations = 1)
-
 cv2.imshow('Input', img)
-# cv2.imshow('Result', res)
+cv2.imshow('Result', res)
 cv2.waitKey(0)
