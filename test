@@ -1,0 +1,253 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import glob
+# from IPython.display import clear_output
+
+def window (name):
+    cv2.namedWindow(name,cv2.WINDOW_NORMAL)
+
+# # 設定輸入的影像路徑，並讀檔
+# # path = "path to the mask in %d.png format"
+# mask = cv2.imread("2.png", cv2.IMREAD_GRAYSCALE)
+
+# # cv2.findContours: 找到ROI的輪廓
+# contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+# color = ['red', 'green']
+# fig = d2l.plt.imshow(mask, cmap='gray')
+# for i in range(0, len(contours)):
+
+#     # cv2.boundingRect: 透過輪廓找到外接矩形
+#     # 輸出：(x, y)矩形左上角座標、w 矩形寬(x軸方向)、h 矩形高(y軸方向)
+#     x, y, w, h = cv2.boundingRect(contours[i])
+    
+#     # 在原影像上繪製出矩形
+#     fig.axes.add_patch(d2l.plt.Rectangle((x, y), w, h, fill=False,
+#                        linestyle="-", edgecolor=color[i],
+#                        linewidth=2))
+# img = cv2.imread("3.png",cv2.IMREAD_GRAYSCALE)
+# print(img.shape)
+# print(img)
+# cv2.imshow("before modify",img)
+# print(f"{img}")
+# for y in range:
+#     for x in range:
+#         if (img[]==255):
+#         img.itemset((y,x),255)
+# cv2.imshow("after",img)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+# image_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+# plt.imshow(image_rgb)
+# plt.show()
+
+# hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+# hue,saturation,value = cv2.split(hsv_img)
+# hsv_img=cv2.merge([value,hue,saturation])
+# gray = cv2.colorChange
+# cv2.imshow("the image",img)
+# cv2.imshow("the merge image",hsv_img)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+
+# def write_text(img):
+#     text = "FONT_HERSHEY_SIMPLEX"
+#     position = (10, 40)
+#     font = cv2.FONT_HERSHEY_SIMPLEX
+#     size = 1
+#     color = (0, 255, 255)
+#     thickness = 1
+#     lineType =  cv2.LINE_AA
+#     cv2.putText(img, text, position, font, size, color, thickness, lineType)
+#     return img
+
+# cv2.putText(img, "FONT_HERSHEY_PLAIN", (10, 80), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 255), 1, cv2.LINE_AA)
+# write_text(img)
+
+# # 鏡頭
+# vid = cv2.VideoCapture('http://192.168.8.106:4747/mjpegfeed') # /video
+# # cv2.namedWindow(cv2.WINDOW_NORMAL)
+# while (vid.isOpened()):
+	
+# 	# Capture the video frame
+# 	# by frame
+# 	ret, frame = vid.read()
+# 	cv2.imshow('mask',frame)
+
+# 	# Display the resulting frame
+    
+# 	# cv2.imshow('mask', frame)
+# 	# gray_frame = cv2.cvtColor(frame,cv2.COLOR_BAYER_BG2BGR)
+# 	# thresh= 52
+# 	# maxval=255
+# 	# ret,dst=cv2.threshold(gray_frame,thresh,maxval,cv2.THRESH_BINARY)
+# 	# cv2.imshow("binary",dst)
+
+# 	c=cv2.waitKey(1)
+# 	if c == 13:
+# 		cv2.imwrite('mypict.jpg',frame)
+# 		img = cv2.imread("mypict.jpg",cv2.IMREAD_GRAYSCALE)
+# 		# gray_frame = cv2.cvtColor(img,cv2.COLOR_BAYER_BG2BGR)
+# 		#自己設定閾值
+# 		thresh= 100
+# 		maxval=255
+# 		ret,dst=cv2.threshold(img,thresh,maxval,cv2.THRESH_BINARY)
+# 		cv2.imshow('original',frame)
+# 		cv2.imshow("binary",dst)
+# 		#自適應閾值
+# 		dst_mean = cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,3,5)
+# 		dst_gauss=cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,5,-1)
+# 		cv2.imshow('adaptiveThreshold',dst_mean)
+# 		cv2.imshow("ADAPTIVE_THRESH_GAUSSIAN_C",dst_gauss)
+# 	if c==27:
+# 		break
+	
+# 	# the 'q' button is set as the
+# 	# quitting button you may use any
+# 	# desired button of your choice
+# 	# if cv2.waitKey(0) & 0xFF == ord('q'):
+# 	# 	break
+# vid.release()
+# cv2.destroyAllWindows()
+
+# #白頭髮標記(侵蝕)
+# img = cv2.imread("16.png")
+# thresh= 110
+# maxval=255
+# window("dst")
+# window("image_copy")
+# kernel = np.ones((3,3), np.uint8)
+# erosion = cv2.erode(img, kernel, iterations = 1)
+# img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# image_copy = img.copy()
+# cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+# cv2.imshow("dst",dst)
+# cv2.imshow("image_copy",image_copy)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# img = cv2.imread("16.png")
+# res1 = cv2.add(img,img)
+# res2 = img+img
+# window("res2")
+# window("ori")
+# cv2.imshow("ori",img)
+# cv2.imshow("res2",res2)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# #白頭髮標記
+# img = cv2.imread("mypict.jpg")
+# thresh= 150
+# maxval=255
+# window("dst")
+# window("image_copy")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# image_copy = img.copy()
+# cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+# cv2.imshow("dst",dst)
+# cv2.imshow("image_copy",image_copy)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+## threshold
+# def show_img(img):
+#     plt.style.use('dark_background')
+#     image_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     plt.imshow(image_rgb)
+#     plt.show()
+# def img_processing(img):
+#     # do something here
+
+#     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # 先將圖片轉為灰階
+    
+#     # global thresholding
+#     ret1,th1 = cv2.threshold(img,100,255,cv2.THRESH_BINARY)
+    
+#     # plot all the images and their histograms
+#     images = [img, 0, th1,]
+#     titles = ['Original Gray Image','Global Thresholding',
+
+#             'Histogram',"Histogram"]
+    
+#     plt.figure(figsize=(15,15)) 
+#     for i in range(2):        
+#         plt.subplot(2,2,0*2+i+1)
+#         plt.imshow(images[i*2],'gray')
+#         plt.title(titles[0*2+i]) #, plt.xticks([]), plt.yticks([])
+        
+#         plt.subplot(2,2,1*2+i+1)
+# #         plt.hist(images[i*3].ravel(),256)
+#         plt.hist(images[i*2].ravel(), 256, [0, 300])
+#         plt.title(titles[1*2+i]) #, plt.xticks([]), plt.yticks([])
+        
+#     plt.show()
+# file_name = "7.png"
+# origin_img = cv2.imread(file_name)
+# print("origin picture:")
+# show_img(origin_img)
+# img_processing(origin_img)
+
+# # threshold&降躁(沒什麼變化)
+# thresh= 120
+# maxval=255
+# img = cv2.imread("1.png")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# blur_img = cv2.medianBlur(img_gray,5) 
+# ret,dst=cv2.threshold(blur_img,thresh,maxval,cv2.THRESH_BINARY)
+# dst_mean = cv2.adaptiveThreshold(blur_img,maxval,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,3,5)
+# dst_gauss=cv2.adaptiveThreshold(blur_img,maxval,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,5,-1)
+# cv2.imshow("dst",dst)
+# cv2.imshow('adaptiveThreshold',dst_mean)
+# cv2.imshow("ADAPTIVE_THRESH_GAUSSIAN_C",dst_gauss)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# # threshold
+# thresh= 51
+# maxval=255
+# img = cv2.imread("2.png")
+# img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("ori",img)
+# cv2.imshow("dst1-51",dst)
+# thresh= 80
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst2-80",dst)
+# thresh= 90
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst3-90",dst)
+# thresh= 100
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst4-100",dst)
+# thresh= 105
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst5-105",dst)
+# thresh= 110
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst6-110",dst)
+# thresh= 120
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst7-120",dst)
+# thresh= 130
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# cv2.imshow("dst8-130",dst)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+img=cv2.imread("mypict.jpg")
+# img=cv2.imread("picture/10.png")
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+lower_gray=np.array([10, 0, 40])
+upper_gray=np.array([180, 18, 230])
+mask = cv2.inRange(hsv, lower_gray, upper_gray)
+res = cv2.bitwise_and(img, img, mask=mask)
+cv2.imshow('Input', img)
+cv2.imshow('Result', res)
+cv2.waitKey(0)

@@ -1,75 +1,75 @@
+from cgitb import reset
 import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import argparse
 
-# ori = cv2.imread("hair.jpg")
-# img = cv2.imread("hair.jpg",cv2.IMREAD_GRAYSCALE)
+# def text(font):
+#     cv2.putText(ori,'white hair', (10,30),font,0.8,(255,0,0),2)
+# cv2.resizeWindow("res1", 500, 500) 
 
-#二分值
-# thresh= 52
-# maxval=255
+# font = cv2.FONT_HERSHEY_SIMPLEX
+if __name__ == '__main__':
 
-# 旋轉角度
-# height,width = img.shape[0:2]
-# angular=input("請輸入旋轉角度:")
-# print(angular)
-# M = cv2.getRotationMatrix2D((width/2,height/2),angular,1)
-# dsize=(width,height)
-# dst1=cv2.warpAffine(img,M,dsize)
+    parse = argparse.ArgumentParser()
+    parse.add_argument('-i', '--imgpath', default='picture/2.jpg', help='Input image')
+    parse.add_argument('-o', '--output', default='', help='Output image')
+    parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
+    parse.add_argument('--color', default='230,50,20', type=str, help='set bgr colors to change')
+    parse.add_argument('--show', default=1, type=int, help='Show picture')
 
+    args = parse.parse_args()
 # 鏡頭
-vid = cv2.VideoCapture('http://192.168.43.150:4747/mjpegfeed') # /video
+vid = cv2.VideoCapture('http://192.168.1.117:4747/mjpegfeed') # /video
 # cv2.namedWindow(cv2.WINDOW_NORMAL)
 while (vid.isOpened()):
-	
-	# Capture the video frame
-	# by frame
-	ret, frame = vid.read()
-	cv2.imshow('output',frame)
 
-	# Display the resulting frame
-    
-	# cv2.imshow('output', frame)
-	# gray_frame = cv2.cvtColor(frame,cv2.COLOR_BAYER_BG2BGR)
-	# thresh= 52
-	# maxval=255
-	# ret,dst=cv2.threshold(gray_frame,thresh,maxval,cv2.THRESH_BINARY)
-	# cv2.imshow("binary",dst)
+# Capture the video frame
+# by frame
+ret, frame = vid.read()
+cv2.imshow('output',frame)
+# Display the resulting frame
 
-	c=cv2.waitKey(1)
-	if c == 13:
-		cv2.imwrite('mypict.jpg',frame)
-		img = cv2.imread("mypict.jpg",cv2.IMREAD_GRAYSCALE)
-		# gray_frame = cv2.cvtColor(img,cv2.COLOR_BAYER_BG2BGR)
-		#自己設定閾值
-		thresh= 100
-		maxval=255
-		ret,dst=cv2.threshold(img,thresh,maxval,cv2.THRESH_BINARY)
-		cv2.imshow('original',frame)
-		cv2.imshow("binary",dst)
-		#自適應閾值
-		dst_mean = cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,3,5)
-		dst_gauss=cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,5,-1)
-		cv2.imshow('adaptiveThreshold',dst_mean)
-		cv2.imshow("ADAPTIVE_THRESH_GAUSSIAN_C",dst_gauss)
-	if c==27:
-		break
-	
-	# the 'q' button is set as the
-	# quitting button you may use any
-	# desired button of your choice
-	# if cv2.waitKey(0) & 0xFF == ord('q'):
-	# 	break
+c=cv2.waitKey(1)
+if c == 13: #enter button
+	cv2.imwrite('mypict.jpg',frame)
+	break
+if c==27: # esc button
+	break
+# the 'q' button is set as the
+# quitting button you may use any
+# desired button of your choice
+# if cv2.waitKey(0) & 0xFF == ord('q'):
+# 	break
 vid.release()
-cv2.destroyAllWindows()
+cv2.destroyWindow('output')
+image_path = args.imgpath
+img = cv2.imread(image_path)
+thresh= 150
+maxval=255
+cv2.namedWindow("gray_hair",cv2.WINDOW_NORMAL)
+cv2.namedWindow("gray_hair_region",cv2.WINDOW_NORMAL)
 
-# ret,dst=cv2.threshold(img,thresh,maxval,cv2.THRESH_BINARY)
-# dst_mean=cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,5,-1)
-# dst_gauss=cv2.adaptiveThreshold(img,maxval,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,5,-1)
-
-# cv2.imshow("original",ori)
-# cv2.imshow("gray",img)
-# cv2.imshow("thresh_binary",dst)
-# cv2.imshow("ADAPTIVE_THRESH_MEAN_C",dst_mean)
-# cv2.imshow("ADAPTIVE_THRESH_GAUSSIAN_C",dst_gauss)
-# # cv2.imshow("counterclockwise",dst1)
+# 取高斯平滑
+img = cv2.GaussianBlur(img, (3, 3), 0)
+kernel = np.ones((3,3), np.uint8)
+erosion = cv2.erode(img, kernel, iterations = 1)
+img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
+ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+# contours,hierarchy=cv2.findContours(dst,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# image_copy = img.copy()
+# cv2.drawContours(image_copy, contours, -1, (0, 255, 0),2, cv2.LINE_AA)
+# cv2.imshow("gray_hair",dst)
+# cv2.imshow("gray_hair_region",image_copy)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
+
+image=cv2.imread(image_path)
+hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+lower_gray=np.array([0, 0, 40])
+upper_gray=np.array([180, 18, 230])
+mask = cv2.inRange(hsv, lower_gray, upper_gray)
+res = cv2.bitwise_and(image, image, mask=mask)
+cv2.imshow("gray_hair",dst)
+cv2.imshow("gray_hair_region",res)
+cv2.waitKey(0)
