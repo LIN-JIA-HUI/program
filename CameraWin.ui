@@ -167,7 +167,8 @@ background-color:	#FF7575;
 border-radius:57px;
 border:3px solid #FF0000;
 border-style:outset;
-}</string>
+}
+QPushButton:hover{border:5px solid #000; background:	#FF2D2D;}</string>
     </property>
     <property name="text">
      <string>Start</string>
