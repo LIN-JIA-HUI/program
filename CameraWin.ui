@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1800</width>
-    <height>850</height>
+    <width>1850</width>
+    <height>950</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>smile.png</normaloff>smile.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -20,15 +24,30 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>50</y>
-      <width>161</width>
+      <width>191</width>
       <height>511</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="bColor">
+       <property name="font">
+        <font>
+         <family>Rockwell</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:hover{border:5px solid #000; background:	#FFC78E;}</string>
+       </property>
        <property name="text">
         <string>Color</string>
        </property>
@@ -53,6 +72,18 @@
      </item>
      <item>
       <widget class="QPushButton" name="bPhoto">
+       <property name="font">
+        <font>
+         <family>Rockwell</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:hover{border:5px solid #000; background:#FFC78E;}</string>
+       </property>
        <property name="text">
         <string>Photo</string>
        </property>
@@ -77,6 +108,18 @@
      </item>
      <item>
       <widget class="QPushButton" name="bGrayHair">
+       <property name="font">
+        <font>
+         <family>Rockwell</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:hover{border:5px solid #000; background:#FFC78E;}</string>
+       </property>
        <property name="text">
         <string>Gray Hair</string>
        </property>
@@ -91,29 +134,38 @@
    <widget class="QPushButton" name="bStart">
     <property name="geometry">
      <rect>
-      <x>597</x>
-      <y>630</y>
-      <width>105</width>
-      <height>105</height>
+      <x>666</x>
+      <y>650</y>
+      <width>114</width>
+      <height>114</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>105</width>
-      <height>105</height>
+      <width>114</width>
+      <height>114</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>105</width>
-      <height>105</height>
+      <width>114</width>
+      <height>114</height>
      </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-background-color:rgb(236, 203, 236);
-border-radius:50px;
-border:2px groove #C889C6;
+background-color:	#FF7575;
+border-radius:57px;
+border:3px solid #FF0000;
 border-style:outset;
 }</string>
     </property>
@@ -124,11 +176,24 @@ border-style:outset;
    <widget class="QLabel" name="lImage">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>270</x>
       <y>10</y>
       <width>900</width>
       <height>600</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{border:1px dashed #000;}
+QLable{border-image: url('C:/Users/melod/Program/OurCam/person.png');}</string>
     </property>
     <property name="text">
      <string>image</string>
@@ -137,15 +202,27 @@ border-style:outset;
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>1140</x>
+      <x>1210</x>
       <y>450</y>
-      <width>230</width>
-      <height>45</height>
+      <width>271</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>標楷體</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QComboBox:hover{border:3px solid #000; background:	#FFC78E;}</string>
     </property>
     <item>
      <property name="text">
-      <string>整理方法建議</string>
+      <string>頭髮整理建議</string>
      </property>
     </item>
     <item>
@@ -177,11 +254,20 @@ border-style:outset;
    <widget class="QLabel" name="lPhoto">
     <property name="geometry">
      <rect>
-      <x>1140</x>
+      <x>1210</x>
       <y>10</y>
       <width>600</width>
       <height>400</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{border:1px dashed #000;}</string>
     </property>
     <property name="text">
      <string>photo</string>
@@ -193,7 +279,7 @@ border-style:outset;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1800</width>
+     <width>1850</width>
      <height>19</height>
     </rect>
    </property>
@@ -209,35 +295,38 @@ border-style:outset;
     <property name="title">
      <string>Tool</string>
     </property>
-    <widget class="QMenu" name="menuactionChoose_Hairstyle">
-     <property name="title">
-      <string>Choose_Hairstyle</string>
-     </property>
-     <addaction name="actionChoose_Long_Hairstyle"/>
-     <addaction name="actionChoose_Medium_Hairstyle"/>
-     <addaction name="actionChoose_Short_Hairstyle"/>
-     <addaction name="actionChoose_Men_s_Hairstyle"/>
-     <addaction name="actionChoose_Others"/>
-    </widget>
     <addaction name="actionChoose_Start"/>
     <addaction name="separator"/>
     <addaction name="actionChoose_Color"/>
     <addaction name="actionChoose_Photo"/>
     <addaction name="actionChoose_GrayHair"/>
     <addaction name="separator"/>
-    <addaction name="menuactionChoose_Hairstyle"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTool"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actiontoolbarOpen"/>
+   <addaction name="actiontoolbarSave"/>
+   <addaction name="actiontoolbarClose"/>
+  </widget>
   <action name="actionChoose_Color">
    <property name="icon">
     <iconset>
      <normaloff>actioncolor.png</normaloff>actioncolor.png</iconset>
    </property>
    <property name="text">
-    <string>Choose_Color</string>
+    <string>Color</string>
    </property>
   </action>
   <action name="actionChoose_Photo">
@@ -246,12 +335,12 @@ border-style:outset;
      <normaloff>actionPhoto.png</normaloff>actionPhoto.png</iconset>
    </property>
    <property name="text">
-    <string>Choose_Photo</string>
+    <string>Photo</string>
    </property>
   </action>
   <action name="actionChoose_Start">
    <property name="text">
-    <string>Choose_Start</string>
+    <string>Start</string>
    </property>
    <property name="shortcutVisibleInContextMenu">
     <bool>false</bool>
@@ -263,32 +352,32 @@ border-style:outset;
      <normaloff>actionGray.png</normaloff>actionGray.png</iconset>
    </property>
    <property name="text">
-    <string>Choose_GrayHair</string>
+    <string>GrayHair</string>
    </property>
   </action>
   <action name="actionChoose_Long_Hairstyle">
    <property name="text">
-    <string>Choose_Long Hairstyle</string>
+    <string>Long Hairstyle</string>
    </property>
   </action>
   <action name="actionChoose_Medium_Hairstyle">
    <property name="text">
-    <string>Choose_Medium Hairstyle</string>
+    <string>Medium Hairstyle</string>
    </property>
   </action>
   <action name="actionChoose_Short_Hairstyle">
    <property name="text">
-    <string>Choose_Short Hairstyle</string>
+    <string>Short Hairstyle</string>
    </property>
   </action>
   <action name="actionChoose_Others">
    <property name="text">
-    <string>Choose_Others</string>
+    <string>Others</string>
    </property>
   </action>
   <action name="actionChoose_Men_s_Hairstyle">
    <property name="text">
-    <string>Choose_Men's Hairstyle</string>
+    <string>Men's Hairstyle</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -325,6 +414,42 @@ border-style:outset;
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actiontoolbarOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>actionopen.png</normaloff>actionopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>toolbarOpen</string>
+   </property>
+   <property name="toolTip">
+    <string>Open File</string>
+   </property>
+  </action>
+  <action name="actiontoolbarSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>actionSave.png</normaloff>actionSave.png</iconset>
+   </property>
+   <property name="text">
+    <string>toolbarSave</string>
+   </property>
+   <property name="toolTip">
+    <string>Save Photo</string>
+   </property>
+  </action>
+  <action name="actiontoolbarClose">
+   <property name="icon">
+    <iconset>
+     <normaloff>actionClose.png</normaloff>actionClose.png</iconset>
+   </property>
+   <property name="text">
+    <string>toolbarClose</string>
+   </property>
+   <property name="toolTip">
+    <string>Close</string>
    </property>
   </action>
  </widget>
@@ -385,8 +510,8 @@ border-style:outset;
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>649</x>
-     <y>701</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>649</x>

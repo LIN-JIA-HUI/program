@@ -4,7 +4,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap, QFont
-from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog
+from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog, QMainWindow, QApplication
 import cv2
 from cv2 import VideoCapture
 from UI import Ui_MainWindow
@@ -20,8 +20,11 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         # self.ui = Ui_MainWindow()
         # self.ui.setupUi(self)
         uic.loadUi('CameraWin.ui', self)
+        self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.show_viedo)
+        self.lImage.setAlignment(Qt.AlignCenter)
+        self.lPhoto.setAlignment(Qt.AlignCenter)
         self.bStart.clicked.connect(self.showVideo) #鏡頭
         self.bGrayHair.clicked.connect(self.grayHairAna) #白髮分析
         self.bPhoto.clicked.connect(self.takePhoto) #拍照
@@ -29,13 +32,23 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         # self.menuactionChoose_Hairstyle.triggered.connect(self.menuselectChanged)
         self.bColor.clicked.connect(self.chooseColor) #調整髮色
         self.actionClose.triggered.connect(exit) #關閉程式
+        self.actiontoolbarClose.triggered.connect(exit)
         self.actionOpen.triggered.connect(self.fileOpen) #開啟資料夾選擇照片
+        self.actiontoolbarOpen.triggered.connect(self.fileOpen)
         self.actionSave.triggered.connect(self.fileSave) #儲存照片至資料夾
+        self.actiontoolbarSave.triggered.connect(self.fileSave)
         self.lImage.setToolTip('手機鏡頭畫面')
         self.lPhoto.setToolTip('照片顯示於此')
         self.bPhoto.setToolTip('拍照並儲存照片')
         self.bGrayHair.setToolTip('分析白頭髮區域')
         self.bColor.setToolTip('使用調色盤選擇髮色')
+        self.actionOpen.setStatusTip('開啟資料夾選擇圖片')
+        self.actionSave.setStatusTip('儲存照片置資料夾')
+        self.actionClose.setStatusTip('選取以關閉視窗')
+        self.actionChoose_Color.setStatusTip('開啟調色盤選擇髮色')
+        self.actionChoose_Photo.setStatusTip('拍照')
+        self.actionChoose_GrayHair.setStatusTip('分析白髮區域')
+        self.actionChoose_Start.setStatusTip('開啟/關閉手機鏡頭')
         self.cap_video=0
         self.flag = 0
         self.img = []
@@ -75,43 +88,45 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
     #開啟資料夾選擇照片
     def fileOpen(self):
-        filename = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Image Files(*.jpg *.png)")
+        filename = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\Users\melod\Program\OurCam', "Image Files(*.jpg *.png)")
         imagePath = filename[0]
         print(imagePath)
         pixmap = QPixmap(imagePath)
         self.lPhoto.setPixmap(pixmap)
+        # self.lPhoto.setScaledContents(True)
 
     #儲存照片至資料夾    
     def fileSave(self):
+        photo = cv2.imread('photo.jpg')
         filename = QFileDialog.getSaveFileName(self, 'Save File', 'c:\\', "Image Files(*.jpg *.png)")
-
+        
     #連接手機相機
     def showVideo(self):
         if (self.flag == 0):
             # self.ui.bStart.setToolTip('關閉相機')
-            self.cap_video = cv2.VideoCapture('http://192.168.252.2:4747/mjpegfeed')
+            self.cap_video = cv2.VideoCapture('http://192.168.11.190:4747/mjpegfeed')
             self.timer.start(5);
             self.flag+=1
-            self.bStart.setText("Close")
+            self.bStart.setText("Turn\nOff")
         else:
             self.timer.stop()
             self.cap_video.release()
             self.lImage.clear()
-            self.bStart.setText("Continue")
+            self.bStart.setText("Turn\nOn")
             self.flag=0
 
     #拍照
     def takePhoto(self):
-        thresh= 120
-        maxval= 255
+        # thresh= 120
+        # maxval= 255
         #def window (name):
             #cv2.namedWindow(name,cv2.WINDOW_NORMAL)
         if (self.flag == 1):
             ret, frame = self.cap_video.read()
             cv2.imwrite('photo.jpg',frame)
             img = cv2.imread("photo.jpg")
-            thresh= 120
-            maxval=255
+            # thresh= 120
+            # maxval=255
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # 改為 RGB
             height, width, channel = frame.shape
             bytesPerline = channel * width
