@@ -52,7 +52,7 @@ def hair(image, parsing, part=17, color=[230, 50, 20]):
 if __name__ == '__main__':
 
     parse = argparse.ArgumentParser()
-    parse.add_argument('-i', '--imgpath', default='imgs/10.png', help='Input image')
+    parse.add_argument('-i', '--imgpath', default='imgs/6.jpg', help='Input image')
     parse.add_argument('-o', '--output', default='', help='Output image')
     parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
     parse.add_argument('--color', default='230,50,20', type=str, help='set bgr colors to change')
