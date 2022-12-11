@@ -43,11 +43,11 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.bGrayHair.setToolTip('分析白頭髮區域')
         self.bColor.setToolTip('使用調色盤選擇髮色')
         self.actionOpen.setStatusTip('開啟資料夾選擇圖片')
-        self.actionSave.setStatusTip('儲存照片置資料夾')
+        self.actionSave.setStatusTip('儲存照片至資料夾')
         self.actionClose.setStatusTip('選取以關閉視窗')
-        self.actionChoose_Color.setStatusTip('開啟調色盤選擇髮色')
-        self.actionChoose_Photo.setStatusTip('拍照')
-        self.actionChoose_GrayHair.setStatusTip('分析白髮區域')
+        self.actionChoose_Color.setStatusTip('使用調色盤選擇髮色')
+        self.actionChoose_Photo.setStatusTip('拍照並儲存照片')
+        self.actionChoose_GrayHair.setStatusTip('分析白頭髮區域')
         self.actionChoose_Start.setStatusTip('開啟/關閉手機鏡頭')
         self.cap_video=0
         self.flag = 0
@@ -103,7 +103,6 @@ class MainWindow_controller(QtWidgets.QMainWindow):
     #連接手機相機
     def showVideo(self):
         if (self.flag == 0):
-            # self.ui.bStart.setToolTip('關閉相機')
             self.cap_video = cv2.VideoCapture('http://192.168.11.190:4747/mjpegfeed')
             self.timer.start(5);
             self.flag+=1
