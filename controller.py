@@ -2,7 +2,7 @@ import time, sys
 import os
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
-from PyQt5.QtCore import Qt
+from PyQt5d.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog
 import cv2
