@@ -97,8 +97,10 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
     #儲存照片至資料夾    
     def fileSave(self):
-        photo = cv2.imread('photo.jpg')
+        img = cv2.imread("photo.jpg")
         filename = QFileDialog.getSaveFileName(self, 'Save File', 'c:\\', "Image Files(*.jpg *.png)")
+        if filename :
+            cv2.imwrite(str(filename[0]), img)
         
     #連接手機相機
     def showVideo(self):
