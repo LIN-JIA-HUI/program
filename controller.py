@@ -2,7 +2,7 @@ import time, sys
 import os
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
-from PyQt5d.QtCore import Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog
 import cv2
@@ -89,7 +89,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
     def showVideo(self):
         if (self.flag == 0):
             # self.ui.bStart.setToolTip('關閉相機')
-            self.cap_video = cv2.VideoCapture('http://192.168.252.2:4747/mjpegfeed')
+            self.cap_video = cv2.VideoCapture('http://192.168.11.190:4747/mjpegfeed')
             self.timer.start(5);
             self.flag+=1
             self.bStart.setText("Close")
