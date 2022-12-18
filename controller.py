@@ -52,7 +52,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.cap_video=0
         self.flag = 0
         self.img = []
-        QToolTip.setFont(QFont('SansSerif', 10))
+        # QToolTip.setFont(QFont('SansSerif', 10))
         #setup style sheet
         #self.ui.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) #介面改為黑色
 
