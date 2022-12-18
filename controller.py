@@ -2,7 +2,7 @@ import time, sys
 import os
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
-from PyQt5d.QtCore import Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QToolTip, QColorDialog
 import cv2
@@ -39,7 +39,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.cap_video=0
         self.flag = 0
         self.img = []
-        QToolTip.setFont(QFont('SansSerif', 10))
+        # QToolTip.setFont(QFont('SansSerif', 10))
         #setup style sheet
         #self.ui.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) #介面改為黑色
 

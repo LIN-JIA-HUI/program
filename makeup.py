@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parse = argparse.ArgumentParser()
     parse.add_argument('-i', '--imgpath', default='imgs/6.jpg', help='Input image')
     parse.add_argument('-o', '--output', default='', help='Output image')
-    parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
+    # parse.add_argument('--model', default='models/79999_iter.pth', help='model path')
     parse.add_argument('--color', default='230,50,20', type=str, help='set bgr colors to change')
     parse.add_argument('--show', default=1, type=int, help='Show picture')
 
@@ -73,11 +73,12 @@ if __name__ == '__main__':
     }
 
     image_path = args.imgpath
+    cp='cp/79999_iter.pth'
 
     image = cv2.imread(image_path)
     image = cv2.resize(image,(1024,1024))
     ori = image.copy()
-    parsing = evaluate(image_path, args.model)
+    parsing = evaluate(image_path, cp)
     parsing = cv2.resize(parsing, image.shape[0:2], interpolation=cv2.INTER_NEAREST)
     parts = [table['hair']]# , table['upper_lip'], table['lower_lip']]
 
