@@ -139,9 +139,8 @@ class MainWindow_controller(QtWidgets.QMainWindow):
     def grayHairAna(self):
         thresh= 120
         maxval= 255
-        if (self.flag == 1):
             # print(f'python practice.py -i {self.photopath}')
-            os.system(f'python practice.py -i {self.photopath}')
+        os.system(f'python practice.py -i {self.photopath}')
             # img = cv2.imread("photo.jpg")
             # thresh= 120
             # maxval=255
