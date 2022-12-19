@@ -88,6 +88,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         filename = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Image Files(*.jpg *.png)")
         imagePath = filename[0]
         print(imagePath)
+        self.photopath = imagePath
         pixmap = QPixmap(imagePath)
         self.lPhoto.setPixmap(pixmap)
 
@@ -130,15 +131,17 @@ class MainWindow_controller(QtWidgets.QMainWindow):
             bytesPerline = channel * width
             img = QImage(frame, width, height, bytesPerline, QImage.Format_RGB888)
             self.lPhoto.setPixmap(QPixmap.fromImage(img))   # 顯示圖片
+            imgpath = os.path.dirname(os.path.abspath(__file__))
+            print(imgpath+"\photo.jpg")
+            self.photopath = imgpath+"\photo.jpg"
     
     #白頭髮 #合
     def grayHairAna(self):
         thresh= 120
         maxval= 255
         if (self.flag == 1):
-            #下面兩行暫時註解掉。
-            sc = self.selectedColor
-            os.system(f'python makeup.py -i photo.jpg --color {sc[2]},{sc[1]},{sc[0]}')
+            # print(f'python practice.py -i {self.photopath}')
+            os.system(f'python practice.py -i {self.photopath}')
             # img = cv2.imread("photo.jpg")
             # thresh= 120
             # maxval=255
@@ -159,6 +162,8 @@ class MainWindow_controller(QtWidgets.QMainWindow):
             print(color.red(), color.green(), color.blue())
             r, g, b = color.red(), color.green(), color.blue()
             self.selectedColor = [r, g, b]
+            sc = self.selectedColor
+            os.system(f'python makeup.py -i {self.photopath} --color {sc[2]},{sc[1]},{sc[0]}')
         # strRGB = ('{:^3d}, {:^3d}, {:^3d}'.format(r, g, b))
 
     def show_viedo(self):
