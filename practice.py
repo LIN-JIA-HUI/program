@@ -16,8 +16,8 @@ if __name__ == '__main__':
 
 	image=cv2.imread(image_path)
 	hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-	lower_gray=np.array([0, 0, 40])
-	upper_gray=np.array([180, 18, 230])
+	lower_gray=np.array([0, 0, 135])
+	upper_gray=np.array([180, 18, 243])
 	mask = cv2.inRange(hsv, lower_gray, upper_gray)
 	res = cv2.bitwise_and(image, image, mask=mask)
 
