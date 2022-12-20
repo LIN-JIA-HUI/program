@@ -134,8 +134,8 @@
    <widget class="QPushButton" name="bStart">
     <property name="geometry">
      <rect>
-      <x>666</x>
-      <y>650</y>
+      <x>664</x>
+      <y>670</y>
       <width>114</width>
       <height>114</height>
      </rect>
@@ -180,7 +180,7 @@ QPushButton:hover{border:5px solid #000; background:	#FF2D2D;}</string>
       <x>270</x>
       <y>10</y>
       <width>900</width>
-      <height>600</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="font">
