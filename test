@@ -1,4 +1,5 @@
 import cv2
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
@@ -241,13 +242,78 @@ def window (name):
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-img=cv2.imread("mypict.jpg")
-# img=cv2.imread("picture/10.png")
+img=cv2.imread('picture/blackhair.jpg')  #picture/8.png
+# thresh= 100
+# maxval=255
+# kernel = np.ones((3,3), np.uint8)
+# erosion = cv2.erode(img, kernel, iterations = 1)
+# img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+
+# blur_img = cv2.GaussianBlur(erosion,(5,5),25)
+# usm =cv2.addWeighted(img,1.5,blur_img,-0.5,0)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-lower_gray=np.array([10, 0, 40])
-upper_gray=np.array([180, 18, 230])
-mask = cv2.inRange(hsv, lower_gray, upper_gray)
-res = cv2.bitwise_and(img, img, mask=mask)
-cv2.imshow('Input', img)
-cv2.imshow('Result', res)
+# lower_gray=np.array([0, 0, 135])
+# upper_gray=np.array([180, 18, 243])
+lower_red=np.array([159, 50, 70])
+upper_red=np.array([180, 255, 255])
+mask1 = cv2.inRange(hsv, lower_red, upper_red)
+res = cv2.bitwise_and(img, img, mask=mask1)#
+cv2.imshow('img',hsv)
+# cv2.imshow('mask', mask)
+cv2.imshow('result',res)
 cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# img =cv2.imread('mypict.jpg')
+# filter = np.array([[1/9, 1/9, 1/9],
+#                    [1/9, 1/9, 1/9],
+#                    [1/9, 1/9, 1/9]])
+# dst4 = cv2.filter2D(img,-1,filter)
+# dst1=cv2.blur(img,(15,15))
+# dst2=cv2.GaussianBlur(img,(15,15),0,0)
+# dst3=cv2.bilateralFilter(img,15,100,100)
+# hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+# lower_gray=np.array([0, 0, 135])
+# upper_gray=np.array([180, 18, 243])
+# mask = cv2.inRange(hsv, lower_gray, upper_gray)
+# res = cv2.bitwise_and(img, img, mask=mask)
+# # cv2.imshow("img",dst1)
+# # cv2.imshow("gaussian",res)
+# cv2.imshow("dst4",res)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# def on_trackbar(val):
+#     # apply threshold to the image using the trackbar value
+#     _, thresholded_image = cv2.threshold(img, val, 255, cv2.THRESH_BINARY)
+#     # display the thresholded image
+#     cv2.imshow("Thresholded Image", thresholded_image)
+
+# cv2.namedWindow("Control")
+# cv2.createTrackbar("Threshold", "Control", 0, 255, on_trackbar)
+
+# img=cv2.imread('mypict.jpg') #picture/8.png
+# blur_img = cv2.GaussianBlur(img,(5,5),25)
+# gray=cv2.cvtColor(blur_img,cv2.COLOR_BGR2GRAY)
+# dst1=cv2.equalizeHist(gray)
+# graytocolor=cv2.cvtColor(dst1,cv2.COLOR_GRAY2BGR)
+
+# wb = cv2.xphoto.createGrayworldWB()
+# dst2 = wb.balanceWhite(graytocolor)
+# thresh =123
+# maxval=255
+# ret,dst = cv2.threshold(dst2,thresh,maxval,cv2.THRESH_TOZERO_INV)
+
+
+# # usm =cv2.addWeighted(img,1.5,dst,-0.5,0)
+# # hsv = cv2.cvtColor(usm, cv2.COLOR_BGR2HSV)
+# # lower_gray=np.array([0, 0, 135])
+# # upper_gray=np.array([180, 18, 243])
+# # mask = cv2.inRange(hsv, lower_gray, upper_gray)
+# # res = cv2.bitwise_and(img, img, mask=mask)
+# cv2.imshow('img',img)
+# # # cv2.imshow('dst2',dst2)
+# cv2.imshow('res',dst)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
