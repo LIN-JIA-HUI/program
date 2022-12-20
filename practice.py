@@ -20,29 +20,29 @@ import argparse
 
 #     args = parse.parse_args()
 # 鏡頭
-vid = cv2.VideoCapture('http://192.168.1.117:4747/mjpegfeed') # /video
-# cv2.namedWindow(cv2.WINDOW_NORMAL)
-while (vid.isOpened()):
+# vid = cv2.VideoCapture('http://192.168.1.117:4747/mjpegfeed') # /video
+# # cv2.namedWindow(cv2.WINDOW_NORMAL)
+# while (vid.isOpened()):
 
-    # Capture the video frame
-    # by frame
-    ret, frame = vid.read()
-    cv2.imshow('output',frame)
-    # Display the resulting frame
+#     # Capture the video frame
+#     # by frame
+#     ret, frame = vid.read()
+#     cv2.imshow('output',frame)
+#     # Display the resulting frame
 
-    c=cv2.waitKey(1)
-    if c == 13: #enter button
-        cv2.imwrite('mypict.jpg',frame)
-        break
-    if c==27: # esc button
-        break
-    # the 'q' button is set as the
-    # quitting button you may use any
-    # desired button of your choice
-    # if cv2.waitKey(0) & 0xFF == ord('q'):
-    # 	break
-vid.release()
-cv2.destroyWindow('output')
+#     c=cv2.waitKey(1)
+#     if c == 13: #enter button
+#         cv2.imwrite('mypict.jpg',frame)
+#         break
+#     if c==27: # esc button
+#         break
+#     # the 'q' button is set as the
+#     # quitting button you may use any
+#     # desired button of your choice
+#     # if cv2.waitKey(0) & 0xFF == ord('q'):
+#     # 	break
+# vid.release()
+# cv2.destroyWindow('output')
     # img = cv2.imread('mypict.jpg')
     # thresh= 150
     # maxval=255
@@ -63,21 +63,29 @@ cv2.destroyWindow('output')
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-img=cv2.imread('mypict.jpg')  #picture/8.png
-kernel = np.ones((3,3), np.uint8)
-erosion = cv2.erode(img, kernel, iterations = 1)
-img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
-ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
-
-blur_img = cv2.GaussianBlur(erosion,(0,0),25)
-usm =cv2.addWeighted(img,1.5,blur_img,-0.5,0)
+img=cv2.imread('picture/10.png')  #mypict.jpg
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-lower_gray=np.array([0, 0, 135])
-upper_gray=np.array([180, 18, 243])
+# lower_gray=np.array([0, 0, 135])
+# upper_gray=np.array([180, 18, 243])
+lower_gray=np.array([0, 0, 40])
+upper_gray=np.array([180, 18, 230])
 mask = cv2.inRange(hsv, lower_gray, upper_gray)
 res = cv2.bitwise_and(img, img, mask=mask)
+
+# kernel = np.ones((3,3), np.uint8)
+# erosion = cv2.erode(img, kernel, iterations = 1)
+# img_gray = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
+# ret,dst=cv2.threshold(img_gray,thresh,maxval,cv2.THRESH_BINARY)
+
+# blur_img = cv2.GaussianBlur(erosion,(0,0),25)
+# usm =cv2.addWeighted(img,1.5,blur_img,-0.5,0)
+# hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+# lower_gray=np.array([0, 0, 135])
+# upper_gray=np.array([180, 18, 243])
+# mask = cv2.inRange(hsv, lower_gray, upper_gray)
+# res = cv2.bitwise_and(img, img, mask=mask)
 cv2.imshow('Input',img)
-cv2.imshow('Result', dst)
+cv2.imshow('Result', res)
 # cv2.imshow("plus",plus)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
