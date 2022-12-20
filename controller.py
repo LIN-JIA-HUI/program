@@ -103,7 +103,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
     def showVideo(self):
         if (self.flag == 0):
             # self.ui.bStart.setToolTip('關閉相機')
-            self.cap_video = cv2.VideoCapture('http://192.168.11.190:4747/mjpegfeed')
+            self.cap_video = cv2.VideoCapture('http://192.168.0.244:4747/mjpegfeed')
             self.timer.start(5);
             self.flag+=1
             self.bStart.setText("Turn\nOff")
@@ -122,10 +122,9 @@ class MainWindow_controller(QtWidgets.QMainWindow):
             #cv2.namedWindow(name,cv2.WINDOW_NORMAL)
         if (self.flag == 1):
             ret, frame = self.cap_video.read()
-            cv2.imwrite('photo.jpg',frame)
             img = cv2.imread("photo.jpg")
-            # thresh= 120
-            # maxval=255
+            img = cv2.resize(frame, (512, 512))
+            cv2.imwrite('photo.jpg',img)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # 改為 RGB
             height, width, channel = frame.shape
             bytesPerline = channel * width
